@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/mandelbrot.dir/src/main.cpp.o CMakeFiles/mandelbrot.dir/src/mandelbrot.cpp.o CMakeFiles/mandelbrot.dir/src/engine.cpp.o CMakeFiles/mandelbrot.dir/src/canvas.cpp.o CMakeFiles/mandelbrot.dir/src/input.cpp.o -o mandelbrot 
