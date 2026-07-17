@@ -1,0 +1,3 @@
+/home/tyler/.local/bin/Terminal-Mandelbrot-Render/build/CMakeFiles/mandelbrot.dir
+/home/tyler/.local/bin/Terminal-Mandelbrot-Render/build/CMakeFiles/edit_cache.dir
+/home/tyler/.local/bin/Terminal-Mandelbrot-Render/build/CMakeFiles/rebuild_cache.dir
