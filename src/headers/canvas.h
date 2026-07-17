@@ -38,6 +38,11 @@ class Canvas {
     /// @return pixel pairs for easy printing (top/bottom)
     std::vector<std::pair<unsigned int, unsigned int>> parse(std::vector<unsigned int> pixels);
 
+    /// @brief splits the 1-dimensional vector into magnitude pairs, top and bottom for the foreground/background
+    /// @param magnitudes public vector of magnitudes from engine
+    /// @return magnitude pairs to map with the pixels for smooth coloring
+    std::vector<std::pair<double, double>> parse_magnitudes(std::vector<double> magnitudes);
+
     /// @brief calculates the color of a pixel
     /// @param escape the pixel's iterataions to escape
     /// @param iter_depth how many times we're willing to iterate

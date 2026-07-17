@@ -16,10 +16,25 @@ std::vector<std::pair<unsigned int, unsigned int>> Canvas::parse(std::vector<uns
   return pixel_pairs;
 }
 
+std::vector<std::pair<double, double>> Canvas::parse_magnitudes(std::vector<double> magnitudes) {
+  std::vector<std::pair<double, double>> magnitude_pairs;
+
+  // iterates over every other row of pixels and builds the pixel pair vector
+  for (unsigned int row = 0; row < TERM_HEIGHT*2; row += 2) {
+    for (unsigned int col = 0; col < TERM_WIDTH; col++) {
+      // not very clear, sorry (to whoever is reading this)
+      // this line builds the pairs by using the top row (of each cursor char) for the first element and the bottom row for the second
+      magnitude_pairs.push_back(std::pair<double, double>(magnitudes.at(row*TERM_WIDTH + col), magnitudes.at((row + 1)*TERM_WIDTH + col)));
+    }
+  }
+
+  return magnitude_pairs;
+}
+
 Canvas::RGB Canvas::calculate_color(unsigned int escape, unsigned int iter_depth, double magnitude) {
-  // double mu = static_cast<double>(escape) - std::log2(std::log2(magnitude));
-  // double t = mu / static_cast<double>(iter_depth);
-  double t = static_cast<double>(escape) / static_cast<double>(iter_depth);
+  double mu = static_cast<double>(escape) - std::log2(std::log2(magnitude));
+  double t = mu / static_cast<double>(iter_depth);
+  // double t = static_cast<double>(escape) / static_cast<double>(iter_depth);
   double intensity;
 
   // sinusoiodal palette generation: intensity(i) = a + b * cos(2pi(c * t + d))
@@ -57,6 +72,7 @@ Canvas::~Canvas() {
 
 void Canvas::display_terminal(std::vector<unsigned int> pixels, unsigned int iter_depth, std::vector<double> magnitudes) {
   std::vector<std::pair<unsigned int, unsigned int>> pixel_pairs = parse(pixels);
+  std::vector<std::pair<double, double>> magnitude_pairs = parse_magnitudes(magnitudes);
 
   // this loop iterates over every pixel and decides what to color it
   for (unsigned int i = 0; i < pixel_pairs.size(); i++) {
@@ -64,7 +80,7 @@ void Canvas::display_terminal(std::vector<unsigned int> pixels, unsigned int ite
     if (pixel_pairs.at(i).first == iter_depth) {  // if in set 
       std::cout << FOREGROUND << "0;0;0m";
     } else {                                      // if escaped
-      color = calculate_color(pixel_pairs.at(i).first, iter_depth, magnitudes.at(i));
+      color = calculate_color(pixel_pairs.at(i).first, iter_depth, magnitude_pairs.at(i).first);
       std::cout << FOREGROUND << color.r << ";" << color.g << ";" << color.b << "m";
     }
 
@@ -72,7 +88,7 @@ void Canvas::display_terminal(std::vector<unsigned int> pixels, unsigned int ite
     if (pixel_pairs.at(i).second == iter_depth) { // if in set
       std::cout << BACKGROUND << "0;0;0m";
     } else {                                      // if escaped
-      color = calculate_color(pixel_pairs.at(i).second, iter_depth, magnitudes.at(i));
+      color = calculate_color(pixel_pairs.at(i).second, iter_depth, magnitude_pairs.at(i).second);
       std::cout << BACKGROUND << color.r << ";" << color.g << ";" << color.b << "m";
     }
 

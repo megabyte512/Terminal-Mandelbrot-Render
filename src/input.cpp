@@ -28,7 +28,7 @@ void Input::move_left() {
   cx = (parameters.min_x + parameters.max_x) / 2.0L;
 }
 void Input::cycle_palettes() {
-  palette_idx ++;
+  palette_idx++;
   if (palette_idx > palettes.size() - 1) {
     palette_idx = 0;
   }
