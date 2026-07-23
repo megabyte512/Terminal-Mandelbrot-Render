@@ -34,11 +34,11 @@ As the input is through the terminal, you have to press ```enter``` to send your
 ## Future Plans / Ideas
 - The addition of Julia sets
 - Multithreading / GPU computing
-- Live input from the keyboard (eliminating the need to press ```enter```)
+- ~~Live input from the keyboard (eliminating the need to press ```enter```)~~
 - Using bigger "data types" to render deeper
   - In practice, you'd really just make your own data type as a(n) array/vector/list
 - Printing to something other than .ppm to reduce the insane amount of storage taken up by those files
-- Adding a way to get terminal width / height at runtime, so you won't have to change those constexpr in common.h and rebuild
+- ~~Adding a way to get terminal width / height at runtime, so you won't have to change those constexpr in common.h and rebuild~~
 
 ## Gallery
 ![classic](gallery/standard.png)
