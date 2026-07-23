@@ -2,6 +2,7 @@
 #include "headers/common.h"
 #include "headers/engine.h"
 #include "headers/canvas.h"
+#include <ncurses.h>
 #include <thread>
 
 Engine print_engine;
@@ -86,13 +87,22 @@ void Input::print() {
 }
 
 
-Input::Input() {}
-Input::~Input() {}
+Input::Input() {
+  tcgetattr(STDIN_FILENO, &orig_termios);
+  termios raw = orig_termios;
+  raw.c_lflag &= ~(ICANON | ECHO);
+  tcsetattr(STDIN_FILENO, TCSANOW, &raw);
+}
+
+Input::~Input() {
+  tcsetattr(STDIN_FILENO, TCSANOW, &orig_termios);
+}
 
 
 bool Input::get_input() {
   char key;
-  std::cin >> key;
+  read(STDIN_FILENO, &key, 1);
+
   switch (key) {
     case('w'):
       move_up();

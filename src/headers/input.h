@@ -3,9 +3,12 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <termios.h>
+#include <unistd.h>
 
 class Input {
   private:
+    termios orig_termios;
     long double zoom = 2.0L;
     long double zoom_level = 1.0L;
     long double cx = 0.0L;

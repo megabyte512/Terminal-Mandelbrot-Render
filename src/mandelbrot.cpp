@@ -6,7 +6,16 @@ Engine engine;
 Canvas canvas;
 Input input;
 
+void Mandelbrot::read_terminal_size() {
+  winsize w;
+  ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+  TERM_WIDTH = w.ws_col;
+  TERM_HEIGHT = w.ws_row;
+}
+
 int Mandelbrot::run() {
+  read_terminal_size();
+
   engine.set_resolution(TERM_WIDTH, TERM_HEIGHT*2);
   std::vector<unsigned int> render = engine.calculate(input.parameters.min_x, input.parameters.min_yi, input.parameters.max_x, input.parameters.max_yi, input.parameters.iter_depth);
   
